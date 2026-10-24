@@ -1,0 +1,87 @@
+# Central configuration. Paths are relative to the project root (folder containing main.py).
+# These settings reproduce the results of eda.ipynb (Parts B and C).
+seed: 42
+
+paths:
+  db: data/gas_monitoring.db
+  table: gas_monitoring
+  outputs: outputs/pipeline_run     # artifacts written by main.py
+  reference: outputs                # artifacts written by eda.ipynb, used for the reproduction checks
+
+target: Activity Level
+group_column: Session ID          # used ONLY for grouped splitting / CV, never as a feature
+target_labels: [Low, Moderate, High]
+
+cleaning:
+  drop_columns: [Session ID]      # ID column: leakage audit (EDA section 2k) showed it only memorises sessions
+  drop_duplicates: true
+  kelvin_threshold: 100           # Temperature above this is Kelvin -> subtract 273.15
+  humidity_range: [0, 100]        # outside -> NaN (physically impossible)
+  co2_infrared_min: 0             # below -> NaN
+  add_missing_indicators: true
+  indicator_columns: [Humidity, CO2_InfraredSensor, CO2_ElectroChemicalSensor,
+                      MetalOxideSensor_Unit3, CO_GasSensor, Ambient Light Level]
+  ordinal_maps:
+    CO_GasSensor: [extremely low, low, medium, high, extremely high]
+    Ambient Light Level: [very_dim, dim, moderate, bright, very_bright]
+
+features:
+  engineered: [temp_x_humidity, co2_z_gap]   # EDA priority list; options: temp_x_humidity, co2_z_gap, mos_pc1. [] = off
+  log_skew_threshold: 1.0                    # columns with train skewness above this get a log1p copy (learned in fit)
+  categorical: [Time of Day, HVAC Operation Mode]
+  winsorize_quantiles: [0.01, 0.99]
+
+split:
+  fractions: [0.70, 0.15, 0.15]   # train / validation / test, by whole sessions
+  seed_search: 300                # pick the session-shuffle seed whose class mix is closest to the overall mix
+
+metrics:
+  primary: pr_auc_macro           # imbalanced 3-class problem -> macro PR AUC
+  all: [accuracy, precision_macro, recall_macro, f1_macro, roc_auc_macro, pr_auc_macro]
+
+tuning:
+  cv_folds: 3                     # GroupKFold by session on the training split
+  factor: 3
+  min_resources: 450              # halving rungs 450 -> 1,350 -> 4,050 training rows
+  max_resources: 4050
+  n_candidates: 27
+  n_jobs: -1
+  importance_repeats: 10
+
+bootstrap: {n: 1000, seed: 42}
+
+# params = library defaults (only seeds fixed); tuned_fixed = settings applied ONLY in the tuning path
+models:
+  naive:
+    class: sklearn.dummy.DummyClassifier
+    params: {strategy: prior}
+  logistic:
+    class: sklearn.linear_model.LogisticRegression
+    params: {}
+    search: grid
+    tuned_fixed: {class_weight: balanced}
+    grid: {clf__C: [0.00001, 0.0001, 0.0003, 0.001, 0.003, 0.01, 0.1, 1]}
+  decision_tree:
+    class: sklearn.tree.DecisionTreeClassifier
+    params: {random_state: 42}
+    search: halving
+    tuned_fixed: {class_weight: balanced}
+    grid: {clf__max_depth: [3, 4, 5, 6, 8, 10, 14], clf__min_samples_leaf: [5, 10, 20, 40, 80], clf__criterion: [gini, entropy]}
+  random_forest:
+    class: sklearn.ensemble.RandomForestClassifier
+    params: {random_state: 42, n_jobs: -1}
+    search: halving
+    tuned_fixed: {class_weight: balanced_subsample, n_estimators: 200, max_samples: 0.7, n_jobs: 1}
+    grid: {clf__max_depth: [4, 6, 8, 12, null], clf__min_samples_leaf: [2, 5, 10, 20], clf__max_features: [0.3, 0.5, sqrt]}
+  hist_gradient_boosting:
+    class: sklearn.ensemble.HistGradientBoostingClassifier
+    params: {random_state: 42}
+    search: halving
+    tuned_fixed: {class_weight: balanced}
+    grid: {clf__learning_rate: [0.02, 0.05, 0.1], clf__max_iter: [100, 200, 400], clf__max_depth: [3, 4, 6], clf__max_leaf_nodes: [8, 15, 31], clf__l2_regularization: [0, 1, 10], clf__min_samples_leaf: [20, 50, 100]}
+  knn:
+    class: sklearn.neighbors.KNeighborsClassifier
+    params: {}
+    search: halving
+    tuned_fixed: {}
+    grid: {clf__n_neighbors: [5, 10, 15, 25, 40, 60], clf__weights: [uniform, distance], clf__p: [1, 2]}
