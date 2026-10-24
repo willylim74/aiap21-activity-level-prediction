@@ -1,8 +1,3 @@
-# Activity Level Prediction (AIAP Batch 21 Technical Assessment)
-
-**Full name (as in NRIC):** `<FILL IN>`  
-**Email (as in application form):** `<FILL IN>`
-
 ## Problem statement
 
 ElderGuard Analytics wants a **non-invasive early-warning system** that can predict potential health emergencies or concerning situations for elderly residents living independently, using environmental sensor data and indoor air quality monitoring (CO2, CO and metal-oxide gas sensors, temperature, humidity, HVAC mode, lighting). The system should help identify when a resident may be experiencing distress, a medical episode or unsafe living conditions, supporting care coordination for family members and healthcare providers.
