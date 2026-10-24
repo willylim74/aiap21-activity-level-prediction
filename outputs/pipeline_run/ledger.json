@@ -1,0 +1,59 @@
+{
+ "tuned::logistic": {
+  "fingerprint": "e8d77812d0b14856",
+  "report": "logistic: best {'clf__C': 0.0003} | CV PR AUC 0.5057 (fold sd 0.0078) | search 13s",
+  "saved": "2026-10-16 22:46:26",
+  "best_params": {
+   "clf__C": 0.0003
+  }
+ },
+ "tuned::decision_tree": {
+  "fingerprint": "433d7ea777bb04f8",
+  "report": "decision_tree: best {'clf__min_samples_leaf': 40, 'clf__max_depth': 10, 'clf__criterion': 'gini'} | CV PR AUC 0.4824 (fold sd 0.0082) | search 4s",
+  "saved": "2026-10-16 22:46:30",
+  "best_params": {
+   "clf__min_samples_leaf": 40,
+   "clf__max_depth": 10,
+   "clf__criterion": "gini"
+  }
+ },
+ "tuned::random_forest": {
+  "fingerprint": "8903907c01061e5c",
+  "report": "random_forest: best {'clf__min_samples_leaf': 10, 'clf__max_features': 'sqrt', 'clf__max_depth': 8} | CV PR AUC 0.5180 (fold sd 0.0094) | search 34s",
+  "saved": "2026-10-16 22:47:07",
+  "best_params": {
+   "clf__min_samples_leaf": 10,
+   "clf__max_features": "sqrt",
+   "clf__max_depth": 8
+  }
+ },
+ "tuned::hist_gradient_boosting": {
+  "fingerprint": "4e5352ca421bbba9",
+  "report": "hist_gradient_boosting: best {'clf__min_samples_leaf': 20, 'clf__max_leaf_nodes': 8, 'clf__max_iter': 100, 'clf__max_depth': 3, 'clf__learning_rate': 0.05, 'clf__l2_regularization': 0} | CV PR AUC 0.5123 (fold sd 0.0107) | search 56s",
+  "saved": "2026-10-16 22:48:05",
+  "best_params": {
+   "clf__min_samples_leaf": 20,
+   "clf__max_leaf_nodes": 8,
+   "clf__max_iter": 100,
+   "clf__max_depth": 3,
+   "clf__learning_rate": 0.05,
+   "clf__l2_regularization": 0
+  }
+ },
+ "tuned::knn": {
+  "fingerprint": "1967a58286592e7b",
+  "report": "knn: best {'clf__weights': 'distance', 'clf__p': 1, 'clf__n_neighbors': 60} | CV PR AUC 0.5047 (fold sd 0.0057) | search 6s",
+  "saved": "2026-10-16 22:48:11",
+  "best_params": {
+   "clf__weights": "distance",
+   "clf__p": 1,
+   "clf__n_neighbors": 60
+  }
+ },
+ "final::test": {
+  "fingerprint": "e25409876f948af7",
+  "report": "test evaluated once for hist_gradient_boosting",
+  "saved": "2026-10-16 22:48:45",
+  "model": "hist_gradient_boosting"
+ }
+}

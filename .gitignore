@@ -1,0 +1,22 @@
+data/gas_monitoring.db
+outputs/checkpoints/
+outputs/pipeline_run/checkpoints/
+__pycache__/
+.ipynb_checkpoints/
+Activity Level Prediction.pdf
+README-sample.md
+outputs/baseline_results.csv
+outputs/best_params.json
+outputs/feature_importance_tuned.csv
+outputs/final_model.joblib
+outputs/final_test_predictions.csv
+outputs/final_test_results.csv
+outputs/final_test_results.json
+outputs/nb_ledger.json
+outputs/README.md
+outputs/run_manifest.json
+outputs/search_spaces.json
+outputs/split_ids.json
+outputs/tuned_results.csv
+outputs/tuned_results.json
+outputs/cv_results/decision_tree.csv

@@ -1,0 +1,99 @@
+{
+ "metrics": {
+  "hist_gradient_boosting (tuned)": {
+   "accuracy": 0.5323349217154527,
+   "precision_macro": 0.5317098628825497,
+   "recall_macro": 0.5390541771997452,
+   "f1_macro": 0.47974119160240464,
+   "roc_auc_macro": 0.741576216653606,
+   "pr_auc_macro": 0.5251107284975962
+  },
+  "hist_gradient_boosting (default)": {
+   "accuracy": 0.6058543226684819,
+   "precision_macro": 0.44209147769572277,
+   "recall_macro": 0.449326454899359,
+   "f1_macro": 0.42959760962673377,
+   "roc_auc_macro": 0.7310851440991444,
+   "pr_auc_macro": 0.503716103456877
+  },
+  "naive": {
+   "accuracy": 0.5479918311776719,
+   "precision_macro": 0.18266394372589065,
+   "recall_macro": 0.3333333333333333,
+   "f1_macro": 0.23600117267663442,
+   "roc_auc_macro": 0.5,
+   "pr_auc_macro": 0.3333333333333333
+  }
+ },
+ "ci95": {
+  "hist_gradient_boosting (tuned)": {
+   "pr_auc_macro": [
+    0.505439895697177,
+    0.5488876834542765
+   ],
+   "f1_macro": [
+    0.4550910052549674,
+    0.5039925541612734
+   ]
+  },
+  "hist_gradient_boosting (default)": {
+   "pr_auc_macro": [
+    0.4866859709035667,
+    0.5272004762523971
+   ],
+   "f1_macro": [
+    0.4089034287394274,
+    0.45036203819192355
+   ]
+  },
+  "naive": {
+   "pr_auc_macro": [
+    0.3333333333333333,
+    0.3333333333333333
+   ],
+   "f1_macro": [
+    0.22848130078369872,
+    0.2434502633047783
+   ]
+  }
+ },
+ "paired_improvement": {
+  "tuned minus hist_gradient_boosting (default) | pr_auc_macro": {
+   "mean_diff": 0.020799404861522944,
+   "ci95": [
+    0.0030351971458882345,
+    0.037609165817636576
+   ]
+  },
+  "tuned minus hist_gradient_boosting (default) | f1_macro": {
+   "mean_diff": 0.05055102430717435,
+   "ci95": [
+    0.019907331206523132,
+    0.08045904972786141
+   ]
+  },
+  "tuned minus naive | pr_auc_macro": {
+   "mean_diff": 0.1936331662278259,
+   "ci95": [
+    0.17210656236384367,
+    0.21555435012094318
+   ]
+  },
+  "tuned minus naive | f1_macro": {
+   "mean_diff": 0.24357979502436947,
+   "ci95": [
+    0.2172928029411448,
+    0.2693307810875586
+   ]
+  }
+ },
+ "selected_model": "hist_gradient_boosting",
+ "best_params": {
+  "clf__min_samples_leaf": "20",
+  "clf__max_leaf_nodes": "8",
+  "clf__max_iter": "100",
+  "clf__max_depth": "3",
+  "clf__learning_rate": "0.05",
+  "clf__l2_regularization": "0"
+ }
+}
